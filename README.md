@@ -13,8 +13,9 @@
         ㆍ 사용 언어, 기술 및 툴: Java, SQL, HTML&CSS, JS / JSP / Eclipse, Workbench<br>
 
     4. 4주차 (24. 06. 24 - 24. 06. 30)<br>
-        ⑴ 24. 06. 24(월)<br>
+        (1) 24. 06. 24(월)<br>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ㆍ 조회수 기능 추가<br>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ㆍ 게시판 파일 업 및 다운로드 기능 추가<br>
+        (2)
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ㆍ TodoList 저장 형식을 txt파일 뿐만 아니라 jpg파일로도 가능하게 구현<br>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ㆍ 페이징을 더 보기 좋게 수정<br>
