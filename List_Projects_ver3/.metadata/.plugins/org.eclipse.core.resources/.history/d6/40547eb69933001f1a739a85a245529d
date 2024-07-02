@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+a, a:hover {
+	color : #000000;
+	text-decoration: none;
+}
+
+/* body {
+     background-color: #e0f7fa;   생동감 있는 옅은 파란색 배경
+} */
+
+.table td {
+        text-align: center;
+        /* border: 1px solid #dddddd; */
+        background-color: #f9f9f9;
+}

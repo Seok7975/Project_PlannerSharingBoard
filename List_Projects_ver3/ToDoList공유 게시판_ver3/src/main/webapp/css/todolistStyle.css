@@ -1,0 +1,108 @@
+@charset "UTF-8";
+/*  body {
+      background-color: #e0f7fa;   생동감 있는 옅은 파란색 배경
+}
+  */
+.todo-container {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #fff; 
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.add-item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.add-item .form-group {
+    display: flex;
+    gap: 10px;
+}
+
+.add-item input[type="text"], 
+.add-item input[type="datetime-local"] {
+    flex: 1;
+    padding: 10px;
+    height: 50px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+ 
+
+
+.add-item button {
+    padding: 10px 20px;
+    border: none;
+    background: #4caf50;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.add-item button:hover {
+    background: #45a049;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    background: #f9f9f9;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.3s;
+}
+
+ul li:hover {
+    background: #ececec;
+}
+
+ul li.completed span {
+    text-decoration: line-through;
+    color: #999;
+}
+
+ul li form {
+    display: flex;
+    align-items: center;
+}
+
+ul li form input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+ul li span {
+    flex-grow: 1;
+}
+
+.delete {
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.delete:hover {
+    background: #ff4c4c;
+}

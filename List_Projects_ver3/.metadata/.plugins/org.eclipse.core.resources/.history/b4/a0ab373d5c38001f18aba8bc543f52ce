@@ -1,0 +1,16 @@
+<%@ page language="java" contentType="application/json; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.io.*, java.util.*, javax.servlet.*, javax.servlet.http.*" %>
+
+<%
+    String username = request.getParameter("username");
+    // 예시로 이미 존재하는 아이디 목록
+    List<String> existingUserIds = Arrays.asList("seok7975", "user1234", "testuser");
+
+    boolean isAvailable = !existingUserIds.contains(username);
+
+    response.setContentType("application/json");
+    PrintWriter out = response.getWriter();
+    out.print("{\"available\": " + isAvailable + "}");
+    out.flush();
+%>

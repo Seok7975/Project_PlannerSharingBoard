@@ -1,0 +1,21 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+// saveImageAction.js
+
+$(document).ready(function() {
+    $('#startButton').click(function() {
+        $('#startDateTime').focus().click();
+    });
+    $('#dueButton').click(function() {
+        $('#dueDateTime').focus().click();
+    });
+
+    $('#saveImageButton').click(function() {
+        html2canvas(document.querySelector('.todo-container')).then(canvas => {
+            var link = document.createElement('a');
+            link.href = canvas.toDataURL('image/jpeg');
+            link.download = 'todo-list.jpg';
+            link.click();
+        });
+    });
+});

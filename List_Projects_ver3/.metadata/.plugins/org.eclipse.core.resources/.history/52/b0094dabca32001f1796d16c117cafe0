@@ -1,0 +1,22 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@0.4.1/dist/html2canvas.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#startButton').click(function() {
+            $('#startDateTime').focus().click();
+        });
+        $('#dueButton').click(function() {
+            $('#dueDateTime').focus().click();
+        });
+
+        $('#saveImageButton').click(function() {
+            html2canvas(document.querySelector('.todo-container')).then(canvas => {
+                var link = document.createElement('a');
+                link.href = canvas.toDataURL('image/jpeg');
+                link.download = 'todo-list.jpg';
+                link.click();
+            });
+        });
+    });
+</script>

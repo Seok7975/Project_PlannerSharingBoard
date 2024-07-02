@@ -1,0 +1,105 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<link rel="stylesheet" href="css/bbsStyle.css"> <!-- 외부 CSS 파일 참조 -->
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="css/jumbotronCustom.css">
+<title>JSP 게시판 웹 사이트</title>
+<script>
+function checkUserID() {
+    var userID = $('#userID').val();
+    $.ajax({
+        url: 'checkUserID.jsp',
+        type: 'POST',
+        data: { userID: userID },
+        dataType: 'text',
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        success: function(result) {
+            if (result.trim() == '1') {
+                $('#userIDFeedback').text('아이디가 이미 존재합니다.').css('color', 'red');
+            } else {
+                $('#userIDFeedback').text('아이디 사용 가능').css('color', 'green');
+            }
+        }
+    });
+}
+</script>
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">THE KNIT COMPANY</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="#">24 S/S</a></li>
+                    <li><a href="#">플래그쉽</a></li>
+                    <li><a href="#">클래식</a></li>
+                    <li><a href="#">ACC</a></li>
+                    <li><a href="#">캠페인</a></li>
+                    <li><a href="#">커뮤니티</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <h2>회원가입</h2>
+        <form>
+            <div class="form-group">
+                <label for="userID">ID *</label>
+                <input type="text" class="form-control" id="userID" name="userID" placeholder="영문소문자/숫자, 4~16자" onblur="checkUserID()">
+                <span id="userIDFeedback"></span>
+            </div>
+            <div class="form-group">
+                <label for="password">Password *</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="영문 대소문자/숫자 4~16자">
+            </div>
+            <div class="form-group">
+                <label for="passwordConfirm">Password confirm *</label>
+                <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm" placeholder="비밀번호 확인">
+            </div>
+            <div class="form-group">
+                <label for="name">Name *</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="이름">
+            </div>
+            <div class="form-group">
+                <label for="address">Address *</label>
+                <input type="text" class="form-control" id="address" name="address" placeholder="주소">
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="text" class="form-control" id="phone" name="phone" placeholder="전화번호">
+            </div>
+            <div class="form-group">
+                <label for="mobile">Mobile *</label>
+                <input type="text" class="form-control" id="mobile" name="mobile" placeholder="휴대전화">
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail *</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="이메일">
+            </div>
+            <button type="submit" class="btn btn-primary">가입하기</button>
+        </form>
+    </div>
+</body>
+</html>
