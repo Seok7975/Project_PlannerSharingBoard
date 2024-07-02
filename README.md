@@ -8,6 +8,18 @@
 2. **프로젝트 목표 및 기대치**
 
 3. **개발 과정**
-    1. 1주차 (24.06.03 - 24.06.10)
-        - 계획 및 대략적인 설계 구성
-        - 사용 언어, 기술 및 툴: Java, SQL, HTML&CSS, JS / JSP / Eclipse, Workbench
+    1. 1주차 (24.06.03 - 24.06.09)<br>
+        ㆍ 계획 및 대략적인 설계 구성<br>
+        ㆍ 사용 언어, 기술 및 툴: Java, SQL, HTML&CSS, JS / JSP / Eclipse, Workbench<br>
+
+    4. 4주차 (24. 06. 24 - 24. 06. 30)<br>
+        (1) 24. 06. 24(월)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ㆍ 조회수 기능 추가<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ㆍ 게시판 파일 업 및 다운로드 기능 추가<br>
+        (2) 24. 06. 25(화)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ㆍ TodoList 저장 형식을 txt파일 뿐만 아니라 jpg파일로도 가능하게 구현<br>
+        (3) 24. 06. 26(수)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ㆍ 페이징을 더욱 가시성있게 수정<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ㆍ 회원가입시 로그인이 되어있는 에러 해결<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ㆍ 제목, 작성자, 내용으로 게시글을 검색할 수 있는 색인기능 추가<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ㆍ 게시판 및 body부분 색깔 변경<br>
