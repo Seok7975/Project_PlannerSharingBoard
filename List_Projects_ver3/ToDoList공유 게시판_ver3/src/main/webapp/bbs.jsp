@@ -162,6 +162,37 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="css/jumbotronCustom.css">
 <title>JSP 게시판 웹 사이트</title>
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+	    let sidebarHidden = false;
+	
+	    function adjustSidebar() {
+	        var windowWidth = window.innerWidth;
+	        var container = document.querySelector('.container');
+	        var containerWidth = container ? container.offsetWidth : 0;
+	        var sidebar = document.querySelector('.sidebar');
+	        var mainContent = document.querySelector('.main-content');
+	        
+	        // 메인 콘텐츠와 사이드바가 겹칠 때 사이드바를 숨김
+	        if (windowWidth <= containerWidth + 200 && !sidebarHidden) {
+	            sidebar.classList.add('hidden');
+	            mainContent.classList.add('expanded');
+	            sidebarHidden = true;
+	        } else if (windowWidth > containerWidth + 200 && sidebarHidden) {
+	            sidebar.classList.remove('hidden');
+	            mainContent.classList.remove('expanded');
+	            sidebarHidden = false;
+	        }
+	    }
+	
+	    adjustSidebar();
+	    
+	    window.addEventListener('resize', function() {
+	        adjustSidebar();
+	    });
+	});
+</script>
+
 </head>
 <body>
 <%
