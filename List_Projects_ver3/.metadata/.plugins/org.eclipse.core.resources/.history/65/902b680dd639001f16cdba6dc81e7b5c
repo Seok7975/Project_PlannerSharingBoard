@@ -1,0 +1,57 @@
+@charset "UTF-8";
+/* body {
+     background-color: #e0f7fa;   생동감 있는 옅은 파란색 배경
+} */
+
+/* 드롭다운 메뉴가 커서를 가져다 대기만 해도 열리도록 설정 */
+.navbar-nav > li.dropdown:hover > .dropdown-menu {
+    display: block;
+}
+
+.category-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+a, a:hover {
+    color : #000000;
+    text-decoration: none;
+}
+
+.table {		
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+.table th.number-col {
+    width: 8%;
+}
+.table th.title-col {
+    width: 45%;
+}
+.table th.writer-col {
+    width: 14%;
+}
+
+.table th.date-col {
+	width: 15%;
+}
+
+.table th.viewCount-col {
+	width: 8%;
+}
+
+.table th, .table td {
+	/* border: 1px solid #ddd; */
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.table td {
+    text-align: center;
+    /* border: 1px solid #dddddd; */
+       background-color: #fefefe;
+}

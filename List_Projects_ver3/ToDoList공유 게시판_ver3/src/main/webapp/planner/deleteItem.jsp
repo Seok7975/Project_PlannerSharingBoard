@@ -21,7 +21,7 @@
 <%
     String userID = (String) session.getAttribute("userID");
     if (userID == null) {
-        response.sendRedirect("../joinAndLogin/login.jsp");
+        response.sendRedirect("../id/login.jsp");
     } else {
         String taskId = request.getParameter("taskId");
 

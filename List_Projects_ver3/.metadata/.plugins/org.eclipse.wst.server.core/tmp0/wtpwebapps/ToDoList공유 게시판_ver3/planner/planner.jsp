@@ -388,6 +388,8 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.ParseException"%>
+<%@page import="java.util.Collections"%>
+<%@page import="java.util.Comparator"%>
 <%@page import="com.example.Task"%>
 <%@page import="com.example.TaskDAO"%>
 <%@page import="java.io.PrintWriter"%>
@@ -400,7 +402,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/bbsStle.css">
     <link rel="stylesheet" href="../css/todolistStyle.css"> <!-- 외부 CSS 파일 참조 -->
+    
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="../js/html2canvas.js"></script> <!-- 스크린샷 저장용 -->
@@ -466,101 +470,136 @@
             PrintWriter script = response.getWriter();
             script.println("<script>");
             script.println("alert('로그인을 하세요')");
-            script.println("location.href = '../joinAndLogin/login.jsp'");
+            script.println("location.href = '../id/login.jsp'");
             script.println("</script>");
         } else {
     %>
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="../main.jsp">게시판 프로젝트</a>
-                </div>
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li><a href="../main.jsp">메인</a></li>
-                        <li><a href="../bbs.jsp">게시판</a></li>
-                        <li class="active"><a href="planner.jsp">플래너</a></li> <!-- 플래너 메뉴 추가 -->
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">회원관리<span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="../joinAndLogin/logoutAction.jsp">로그아웃</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
+    <div class="sidebar">
+        <a href="../main.jsp" style="text-align: center;" >메인</a>
+        <div class="dropdown">
+            <a href="../bbs.jsp?bbsCategory=all" style="text-align: center;" >게시판 <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="../bbs.jsp?bbsCategory=all" style="text-align: center;">전체글보기</a></li>
+                <li><a href="../bbs.jsp?bbsCategory=free" style="text-align: center;">자유게시판</a></li>
+                <li><a href="../bbs.jsp?bbsCategory=study" style="text-align: center;">공부게시판</a></li>
+                <li><a href="../bbs.jsp?bbsCategory=exercise" style="text-align: center;">운동게시판</a></li>
+            </ul>
+        </div>
+        <a href="planner/planner.jsp" style="text-align: center;">플래너</a>
+    </div>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../main.jsp">게시판 프로젝트</a>
             </div>
-        </nav>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="../main.jsp">메인</a></li>
+                    <li class="dropdown">
+                        <a href="../bbs.jsp?bbsCategory=all" role="button" aria-haspopup="true" aria-expanded="false">게시판 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../bbs.jsp?bbsCategory=all">전체글보기</a></li>
+                            <li><a href="../bbs.jsp?bbsCategory=free">자유게시판</a></li>
+                            <li><a href="../bbs.jsp?bbsCategory=study">공부게시판</a></li>
+                            <li><a href="../bbs.jsp?bbsCategory=exercise">운동게시판</a></li>
+                        </ul>
+                    </li>
+                    <li class="active"><a href="planner.jsp">플래너</a></li> <!-- 플래너 메뉴 추가 -->
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">회원관리<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../id/profile.jsp">My Profile</a></li>
+                            <li><a href="../id/logoutAction.jsp">로그아웃</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-        <div class="todo-container">
-            <h1>할 일 목록</h1>
-            <form class="add-item" action="addItem.jsp" method="post">
-                <div class="form-group">
-                    <input type="text" class="form-control" name="item" placeholder="새로운 할 일 추가" required>
-                </div>
-                <div class="form-group">
-                    <button type="button" id="startButton" class="btn btn-primary">시작</button>
-                    <input type="datetime-local" class="form-control" id="startDateTime" name="startDateTime" required>
-                    <button type="button" id="dueButton" class="btn btn-primary">마감</button>
-                    <input type="datetime-local" class="form-control" id="dueDateTime" name="dueDateTime" required>
-                    <button type="submit" class="btn btn-primary">추가</button>
-                </div>
-            </form>
-            <ul>
-                <%
-                    TaskDAO taskDAO = new TaskDAO();
-                    List<Task> tasks = taskDAO.getTasks(userID);
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    <div class="todo-container">
+        <h1>할 일 목록</h1>
+        <form class="add-item" action="addItem.jsp" method="post">
+            <div class="form-group">
+                <input type="text" class="form-control" name="item" placeholder="새로운 할 일 추가" required>
+            </div>
+            <div class="form-group">
+                <button type="button" id="startButton" class="btn btn-primary">시작</button>
+                <input type="datetime-local" class="form-control" id="startDateTime" name="startDateTime" required>
+                <button type="button" id="dueButton" class="btn btn-primary">마감</button>
+                <input type="datetime-local" class="form-control" id="dueDateTime" name="dueDateTime" required>
+                <button type="submit" class="btn btn-primary">추가</button>
+            </div>
+        </form>
+        <ul>
+            <%
+                TaskDAO taskDAO = new TaskDAO();
+                List<Task> tasks = taskDAO.getTasks(userID);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-                    for (Task task : tasks) {
-                        Date startDate = null;
-                        Date dueDate = null;
+                // 시간 순서대로 정렬
+                Collections.sort(tasks, new Comparator<Task>() {
+                    public int compare(Task t1, Task t2) {
                         try {
-                            if (task.getStartDateTime() != null && !task.getStartDateTime().isEmpty()) {
-                                startDate = dateFormat.parse(task.getStartDateTime());
-                             }
-                            if (task.getDueDateTime() != null && !task.getDueDateTime().isEmpty()) {
-                                dueDate = dateFormat.parse(task.getDueDateTime());
-                            }
+                            Date startDate1 = dateFormat.parse(t1.getStartDateTime());
+                            Date startDate2 = dateFormat.parse(t2.getStartDateTime());
+                            return startDate1.compareTo(startDate2);
                         } catch (ParseException e) {
                             e.printStackTrace();
+                            return 0;
                         }
-                %>
-                    <li class="<%= task.getCompleted().equals("yes") ? "completed" : "" %>">
-                        <form action="toggleComplete.jsp" method="post" style="margin: 0;">
-                            <input type="hidden" name="taskId" value="<%= task.getId() %>">
-                            <input type="checkbox" name="completed" <%= task.getCompleted().equals("yes") ? "checked" : "" %> onChange="this.form.submit()">
-                        </form>
-                        <span><%= task.getItem() %> 
-                            (시작: <%= startDate != null ? outputFormat.format(startDate) : "N/A" %>, 
-                            마감: <%= dueDate != null ? outputFormat.format(dueDate) : "N/A" %>)
-                        </span>
-                        <form action="deleteItem.jsp" method="post" style="margin: 0;">
-                            <input type="hidden" name="taskId" value="<%= task.getId() %>">
-                            <button class="delete btn btn-danger" type="submit">삭제</button>
-                        </form>
-                    </li>
-                <%
                     }
-                %>
-            </ul>
-            <form action="saveTasksAction.jsp" method="post" style="margin-top: 20px;">
-                <button type="submit" class="btn btn-info equal-width-button">할 일 목록 텍스트파일 저장</button>
-            </form>
-            <button id="saveImageButton" class="btn btn-info equal-width-button" style="margin-top: 10px;">할 일 목록 그림파일 저장</button>
-        </div>
+                });
+
+                for (Task task : tasks) {
+                    Date startDate = null;
+                    Date dueDate = null;
+                    try {
+                        if (task.getStartDateTime() != null && !task.getStartDateTime().isEmpty()) {
+                            startDate = dateFormat.parse(task.getStartDateTime());
+                        }
+                        if (task.getDueDateTime() != null && !task.getDueDateTime().isEmpty()) {
+                            dueDate = dateFormat.parse(task.getDueDateTime());
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+            %>
+                <li class="<%= task.getCompleted().equals("yes") ? "completed" : "" %>">
+                    <form action="toggleComplete.jsp" method="post" style="margin: 0;">
+                        <input type="hidden" name="taskId" value="<%= task.getId() %>">
+                        <input type="checkbox" name="completed" <%= task.getCompleted().equals("yes") ? "checked" : "" %> onChange="this.form.submit()">
+                    </form>
+                    <span><%= task.getItem() %> 
+                        (시작: <%= startDate != null ? outputFormat.format(startDate) : "N/A" %>, 
+                        마감: <%= dueDate != null ? outputFormat.format(dueDate) : "N/A" %>)
+                    </span>
+                    <form action="deleteItem.jsp" method="post" style="margin: 0;">
+                        <input type="hidden" name="taskId" value="<%= task.getId() %>">
+                        <button class="delete btn btn-danger" type="submit">삭제</button>
+                    </form>
+                </li>
+            <%
+                }
+            %>
+        </ul>
+        <form action="saveTasksAction.jsp" method="post" style="margin-top: 20px;">
+            <button type="submit" class="btn btn-info equal-width-button">할 일 목록 텍스트파일 저장</button>
+        </form>
+        <button id="saveImageButton" class="btn btn-info equal-width-button" style="margin-top: 10px;">할 일 목록 그림파일 저장</button>
+    </div>
     <%
         }
     %>
 </body>
 </html>
-
 

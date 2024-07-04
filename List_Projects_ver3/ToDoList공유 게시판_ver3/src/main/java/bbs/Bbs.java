@@ -15,6 +15,7 @@ public class Bbs {
 	//private String uploadFile;
 	private String fileName; // view에서 보이는 다운로드 링크
 	private int viewCount; // 조회수
+	private String bbsCategory;
 	
 	public int getBbsID() {
 		return bbsID;
@@ -77,5 +78,13 @@ public class Bbs {
 
     public void setViewCount(int viewCount) {
         this.viewCount = viewCount;
+    }
+    
+    public String getBbsCategory() {
+        return bbsCategory;
+    }
+
+    public void setBbsCategory(String bbsCategory) {
+        this.bbsCategory = bbsCategory;
     }
 }

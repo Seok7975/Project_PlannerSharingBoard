@@ -85,6 +85,7 @@ VALUES
 ('gilsoon', 'gilsoon19', 'gildong19', 1, NULL, 0),
 ('gilsoon', 'gilsoon20', 'gildong20, gildong19, gildong18', 1, NULL, 0);
 
+
 INSERT INTO BBS (userID, bbsTitle, bbsContent, bbsAvailable, fileName, viewCount)
 VALUES 
 ('gilsoon', 'gilsoon21', 'gilsoon1, gilsoon2, gilsoon3', 1, NULL, 0),
@@ -104,3 +105,105 @@ VALUES
 ('gilsoon', 'gilsoon31', 'gildong11', 1, NULL, 0),
 ('gilsoon', 'gilsoon32', 'gildong12', 1, NULL, 0),
 ('gilsoon', 'gilsoon33', 'gildong13', 1, NULL, 0);
+
+-- 사용자에게 권한 부여
+GRANT ALL PRIVILEGES ON bbs.* TO 'root'@'localhost';
+FLUSH PRIVILEGES;
+
+SELECT user, host FROM mysql.user;
+
+ALTER USER 'root'@'localhost' IDENTIFIED BY '1234';
+FLUSH PRIVILEGES;
+
+
+SELECT host, user FROM mysql.user WHERE user = 'root';
+
+GRANT ALL PRIVILEGES ON your_database.* TO 'root'@'localhost';
+FLUSH PRIVILEGES;
+
+SELECT user, host FROM mysql.user WHERE user = 'root' AND host = 'localhost';
+
+ALTER TABLE bbs ADD COLUMN bbsCategory VARCHAR(255) NOT NULL DEFAULT 'default';
+
+use bbs;
+
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '1');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '2');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '3');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '4');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '5');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '6');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '7');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '8');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '9');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '10');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '11');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '12');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '13');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '14');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '15');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '16');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '17');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '18');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '19');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '20');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '21');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '22');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '23');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '24');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '25');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '26');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '27');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '28');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '29');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '30');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '31');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '32');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '33');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '34');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '35');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '36');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '37');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '38');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '39');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '40');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '41');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '42');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '43');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '44');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '45');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '46');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '47');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '48');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '49');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '50');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '51');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '52');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '53');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '54');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '55');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '56');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '57');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '58');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '59');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '60');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '61');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '62');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '63');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '64');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '65');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '66');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '67');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '68');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '69');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '70');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '71');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '72');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '73');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '74');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '75');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '76');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '77');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '78');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '79');
+UPDATE `bbs`.`bbs` SET `bbsCategory` = 'free' WHERE (`bbsID` = '80');

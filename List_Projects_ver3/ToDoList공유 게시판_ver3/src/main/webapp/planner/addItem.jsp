@@ -37,7 +37,7 @@
     request.setCharacterEncoding("UTF-8");
     String userID = (String) session.getAttribute("userID");
     if (userID == null) {
-        response.sendRedirect("../joinAndLogin/login.jsp");
+        response.sendRedirect("../id/login.jsp");
     } else {
         String item = request.getParameter("item");
         String startDateTime = request.getParameter("startDateTime");

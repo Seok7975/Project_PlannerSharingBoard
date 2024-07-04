@@ -24,7 +24,7 @@
             PrintWriter script = response.getWriter();
             script.println("<script>");
             script.println("alert('로그인을 해주세요')");
-            script.println("location.href = 'joinAndLogin/login.jsp'");
+            script.println("location.href = 'id/login.jsp'");
             script.println("</script>");
         } else {
             String directory = application.getRealPath("/upload");
@@ -39,12 +39,13 @@
             
             String bbsTitle = multi.getParameter("bbsTitle");
             String bbsContent = multi.getParameter("bbsContent");
+            String bbsCategory = multi.getParameter("bbsCategory"); // bbsCategory 추가
             String fileName = multi.getFilesystemName("fileName"); // 여기서 "fileName"으로 수정되었습니다.
 
             // 업로드된 파일 경로를 이클립스 콘솔에 출력
             System.out.println("Uploaded file path: " + directory + File.separator + fileName);
             
-            if(bbsTitle == null || bbsTitle.trim().isEmpty() || bbsContent == null || bbsContent.trim().isEmpty()) {
+            if(bbsTitle == null || bbsTitle.trim().isEmpty() || bbsContent == null || bbsContent.trim().isEmpty() || bbsCategory == null || bbsCategory.trim().isEmpty()) {
                 PrintWriter script = response.getWriter();
                 script.println("<script>");
                 script.println("alert('입력이 안된 사항이 있습니다.')");
@@ -52,7 +53,7 @@
                 script.println("</script>");
             } else {
                 BbsDAO bbsDAO = new BbsDAO();
-                int result = bbsDAO.write(bbsTitle, userID, bbsContent, fileName);
+                int result = bbsDAO.write(bbsTitle, userID, bbsContent, fileName, bbsCategory);
                 if (result == -1) {
                     PrintWriter script = response.getWriter();
                     script.println("<script>");
@@ -70,3 +71,4 @@
     %>
 </body>
 </html>
+

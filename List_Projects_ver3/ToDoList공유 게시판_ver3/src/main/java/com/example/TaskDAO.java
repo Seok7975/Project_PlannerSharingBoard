@@ -21,7 +21,7 @@ public class TaskDAO {
 
     public List<Task> getTasks(String userID) {
         List<Task> tasks = new ArrayList<>();
-        String SQL = "SELECT * FROM tasks WHERE userID = ?";
+        String SQL = "SELECT * FROM tasks WHERE userID = ? ORDER BY startDateTime ASC";
         try {
             PreparedStatement pstmt = conn.prepareStatement(SQL);
             pstmt.setString(1, userID);

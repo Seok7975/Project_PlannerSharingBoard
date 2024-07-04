@@ -23,11 +23,16 @@
 <link rel="stylesheet" href="css/jumbotronCustom.css">
 <title>JSP 게시판 웹 사이트</title>
 <style>
-.table td {
-        text-align: center;
-        border: 1px solid #dddddd;
-        background-color: #fefefe;
-    }
+	.table td {
+	        text-align: center;
+	        border: 1px solid #dddddd;
+	        background-color: #fefefe;
+	    }
+	    
+	/* 드롭다운 메뉴가 커서를 가져다 대기만 해도 열리도록 설정 */
+	.navbar-nav > li.dropdown:hover > .dropdown-menu {
+	    display: block;
+	}
 </style>
 </head>
 <body>
@@ -50,6 +55,22 @@
     BbsDAO bbsDAO = new BbsDAO();
     bbsDAO.increaseViewCount(bbsID); // 조회수 증가
     Bbs bbs = bbsDAO.getBbs(bbsID);
+    
+    String categoryDisplayName = "";
+    switch(bbs.getBbsCategory()) {
+        case "free":
+            categoryDisplayName = "자유게시판";
+            break;
+        case "study":
+            categoryDisplayName = "공부게시판";
+            break;
+        case "exercise":
+            categoryDisplayName = "운동게시판";
+            break;
+        default:
+            categoryDisplayName = "기타";
+            break;
+    }
 %>
 <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -65,7 +86,15 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a href="main.jsp">메인</a></li>
-                <li class="active"><a href="bbs.jsp">게시판</a></li>
+                    <li class="dropdown active">
+	                    <a href="bbs.jsp?bbsCategory=all" role="button" aria-haspopup="true" aria-expanded="false">게시판 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="bbs.jsp?bbsCategory=all">전체글보기</a></li>
+                            <li><a href="bbs.jsp?bbsCategory=free">자유게시판</a></li>
+                            <li><a href="bbs.jsp?bbsCategory=study">공부게시판</a></li>
+                            <li><a href="bbs.jsp?bbsCategory=exercise">운동게시판</a></li>
+                        </ul>
+                    </li>
                 <li><a href="planner/planner.jsp">플래너</a></li>
             </ul>
             <%
@@ -75,8 +104,8 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">접속하기 <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="joinAndLogin/login.jsp">로그인</a></li>
-                        <li><a href="joinAndLogin/join.jsp">회원가입</a></li>
+                        <li><a href="id/login.jsp">로그인</a></li>
+                        <li><a href="id/join.jsp">회원가입</a></li>
                         <li><a href="planner.jsp">플래너</a></li>
                     </ul>
                 </li>
@@ -88,8 +117,8 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">회원관리<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                    	<li><a href="profile.jsp">My Profile</a></li>
-                        <li><a href="joinAndLogin/logoutAction.jsp">로그아웃</a></li>
+                    	<li><a href="id/profile.jsp">My Profile</a></li>
+                        <li><a href="id/logoutAction.jsp">로그아웃</a></li>
                     </ul>
                 </li>
             </ul>
@@ -109,6 +138,10 @@
                 </tr>
             </thead>
             <tbody>
+                <tr>
+                    <td>카테고리</td>
+                    <td colspan="2"><%= categoryDisplayName %></td>
+                <tr>
                 <tr>
                     <td style="width: 20%;">글 제목</td>
                     <td colspan="2"><%= bbs.getBbsTitle() 

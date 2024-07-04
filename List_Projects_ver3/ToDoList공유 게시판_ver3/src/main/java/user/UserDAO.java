@@ -4,25 +4,42 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class UserDAO {
     
     private Connection conn;
     private PreparedStatement pstmt;
     private ResultSet rs;
+    private String dbURL = "jdbc:mysql://localhost:3306/BBS?useUnicode=true&characterEncoding=UTF-8";
+    private String dbID = "root";
+    private String dbPassword = "1234";
     
     public UserDAO() {
         try {
-            String dbURL = "jdbc:mysql://localhost:3306/BBS?useUnicode=true&characterEncoding=UTF-8";
-            String dbID = "root";
-            String dbPassword = "1234";
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
+ 
+    // 회원가입
+    public int join(User user) {
+        String SQL = "INSERT INTO USER VALUES(?, ?, ?, ?, ?)";
+        try {
+            pstmt = conn.prepareStatement(SQL);
+            pstmt.setString(1, user.getUserID());
+            pstmt.setString(2, user.getUserPassword());
+            pstmt.setString(3, user.getUserName());
+            pstmt.setString(4, user.getUserGender());
+            pstmt.setString(5, user.getUserEmail());
+            return pstmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1; // 데이터베이스 오류
+    }
     
     // 로그인
     public int login(String userID, String userPassword) {
@@ -44,22 +61,65 @@ public class UserDAO {
         return -2; // 데이터베이스 오류
     }
     
-    // 회원가입
-    public int join(User user) {
-        String SQL = "INSERT INTO USER VALUES(?, ?, ?, ?, ?)";
+    public int deleteUser(String userID) {
+        String deleteUserSQL = "DELETE FROM USER WHERE userID = ?";
+        String deletePostsSQL = "DELETE FROM BBS WHERE userID = ?";
+        String deleteTasksSQL = "DELETE FROM tasks WHERE userID = ?";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+
         try {
-            pstmt = conn.prepareStatement(SQL);
-            pstmt.setString(1, user.getUserID());
-            pstmt.setString(2, user.getUserPassword());
-            pstmt.setString(3, user.getUserName());
-            pstmt.setString(4, user.getUserGender());
-            pstmt.setString(5, user.getUserEmail());
-            return pstmt.executeUpdate();
+            if (conn == null || conn.isClosed()) {
+                conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
+            }
+            conn.setAutoCommit(false); // 트랜잭션 시작
+
+            // BBS 테이블에서 게시글 삭제
+            pstmt = conn.prepareStatement(deletePostsSQL);
+            pstmt.setString(1, userID);
+            pstmt.executeUpdate();
+
+            // tasks 테이블에서 할 일 삭제
+            pstmt = conn.prepareStatement(deleteTasksSQL);
+            pstmt.setString(1, userID);
+            pstmt.executeUpdate();
+
+            // USER 테이블에서 사용자 삭제
+            pstmt = conn.prepareStatement(deleteUserSQL);
+            pstmt.setString(1, userID);
+            int result = pstmt.executeUpdate();
+
+            conn.commit(); // 트랜잭션 커밋
+            return result; // 1이면 성공, 0이면 실패
         } catch (Exception e) {
+            if (conn != null) {
+                try {
+                    conn.rollback(); // 오류 발생 시 롤백
+                } catch (SQLException se) {
+                    se.printStackTrace();
+                }
+            }
             e.printStackTrace();
+        } finally {
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException se) {
+                    se.printStackTrace();
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException se) {
+                    se.printStackTrace();
+                }
+            }
         }
         return -1; // 데이터베이스 오류
     }
+
+
     
     // 아이디 찾기
     public String findUserId(String userName, String userEmail) {

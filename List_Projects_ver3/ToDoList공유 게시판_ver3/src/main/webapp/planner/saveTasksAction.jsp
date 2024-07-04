@@ -16,7 +16,7 @@
         PrintWriter script = response.getWriter();
         script.println("<script>");
         script.println("alert('로그인을 하세요')");
-        script.println("location.href = '../joinAndLogin/login.jsp'");
+        script.println("location.href = '../id/login.jsp'");
         script.println("</script>");
     } else {
         String fileName = request.getParameter("fileName");

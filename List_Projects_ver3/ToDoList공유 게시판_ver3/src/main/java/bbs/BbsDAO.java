@@ -62,27 +62,28 @@ public class BbsDAO {
 		return -1; // 데이터베이스 오류
 	}
 	
-	public int write(String bbsTitle, String userID, String bbsContent, String fileName) {
-	    String SQL = "INSERT INTO BBS (bbsID, bbsTitle, userID, bbsDate, bbsContent, bbsAvailable, fileName) VALUES (?, ?, ?, ?, ?, ?, ?)";
-	    try {
-	        PreparedStatement pstmt = conn.prepareStatement(SQL);
-	        pstmt.setInt(1, getNext());
-	        pstmt.setString(2, bbsTitle);
-	        pstmt.setString(3, userID);
-	        pstmt.setString(4, getDate());
-	        pstmt.setString(5, bbsContent);
-	        pstmt.setInt(6, 1);
-	        if (fileName != null) {
-	            pstmt.setString(7, fileName);
-	        } else {
-	            pstmt.setNull(7, java.sql.Types.VARCHAR); // uploadFile(fileName)이 null인 경우
-	        }
-	        return pstmt.executeUpdate();
-	    } catch(Exception e) {
-	        e.printStackTrace();
-	    }
-	    return -1;
-	}
+    public int write(String bbsTitle, String userID, String bbsContent, String fileName, String bbsCategory) {
+        String SQL = "INSERT INTO BBS (bbsID, bbsTitle, userID, bbsDate, bbsContent, bbsAvailable, fileName, bbsCategory) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(SQL);
+            pstmt.setInt(1, getNext());
+            pstmt.setString(2, bbsTitle);
+            pstmt.setString(3, userID);
+            pstmt.setString(4, getDate());
+            pstmt.setString(5, bbsContent);
+            pstmt.setInt(6, 1);
+            if (fileName != null) {
+                pstmt.setString(7, fileName);
+            } else {
+                pstmt.setNull(7, java.sql.Types.VARCHAR);  // uploadFile(fileName)이 null인 경우
+            }
+            pstmt.setString(8, bbsCategory);
+            return pstmt.executeUpdate();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
 
     public void increaseViewCount(int bbsID) {
         String SQL = "UPDATE BBS SET viewCount = viewCount + 1 WHERE bbsID = ?";
@@ -112,6 +113,7 @@ public class BbsDAO {
                 bbs.setBbsAvailable(rs.getInt(6));
                 bbs.setFileName(rs.getString(7)); // 파일 이름 설정
                 bbs.setViewCount(rs.getInt(8)); // 조회수 설정
+                bbs.setBbsCategory(rs.getString(9)); // bbsCategory 설정
                 list.add(bbs);
             }
         } catch (Exception e) {
@@ -153,6 +155,7 @@ public class BbsDAO {
                 bbs.setBbsAvailable(rs.getInt(6));
                 bbs.setFileName(rs.getString(7)); // 파일 이름 설정
                 bbs.setViewCount(rs.getInt(8)); // 조회수 설정
+                bbs.setBbsCategory(rs.getString(9)); // bbsCategory 설정
                 return bbs;
             }
         } catch (Exception e) {
@@ -162,14 +165,15 @@ public class BbsDAO {
     }
 	
 	// 특정한 매개변수로 들어온 제목과 내용을 수정하는 함수
-    public int update(int bbsID, String bbsTitle, String bbsContent, String fileName) {
-        String SQL = "UPDATE BBS SET bbsTitle = ?, bbsContent = ?, fileName = ? WHERE bbsID = ?";
+    public int update(int bbsID, String bbsTitle, String bbsContent, String fileName, String bbsCategory) {
+        String SQL = "UPDATE BBS SET bbsTitle = ?, bbsContent = ?, fileName = ?, bbsCategory = ? WHERE bbsID = ?";
         try {
             PreparedStatement pstmt = conn.prepareStatement(SQL);
             pstmt.setString(1, bbsTitle);
             pstmt.setString(2, bbsContent);
             pstmt.setString(3, fileName);
-            pstmt.setInt(4, bbsID);
+            pstmt.setString(4, bbsCategory);
+            pstmt.setInt(5, bbsID);
             return pstmt.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -214,18 +218,19 @@ public class BbsDAO {
     }
     
     // 검색한 결과의 게시물 수를 반환하는 메서드
-    public int getSearchPostCount(String searchType, String searchKeyword) {
+    public int getSearchPostCount(String searchType, String searchKeyword, String bbsCategory) {
         String SQL = "";
         if (searchType.equals("title")) {
-            SQL = "SELECT COUNT(*) FROM BBS WHERE bbsTitle LIKE ? AND bbsAvailable = 1";
+            SQL = "SELECT COUNT(*) FROM BBS WHERE bbsTitle LIKE ? AND bbsAvailable = 1 AND bbsCategory = ?";
         } else if (searchType.equals("content")) {
-            SQL = "SELECT COUNT(*) FROM BBS WHERE bbsContent LIKE ? AND bbsAvailable = 1";
+            SQL = "SELECT COUNT(*) FROM BBS WHERE bbsContent LIKE ? AND bbsAvailable = 1 AND bbsCategory = ?";
         } else if (searchType.equals("writer")) {
-            SQL = "SELECT COUNT(*) FROM BBS WHERE userID LIKE ? AND bbsAvailable = 1";
+            SQL = "SELECT COUNT(*) FROM BBS WHERE userID LIKE ? AND bbsAvailable = 1 AND bbsCategory = ?";
         }
         try {
             PreparedStatement pstmt = conn.prepareStatement(SQL);
             pstmt.setString(1, "%" + searchKeyword + "%");
+            pstmt.setString(2, bbsCategory);
             rs = pstmt.executeQuery();
             if (rs.next()) {
                 return rs.getInt(1);
@@ -237,7 +242,7 @@ public class BbsDAO {
     }
     
     
-    public ArrayList<Bbs> searchList(int pageNumber, String searchType, String searchKeyword) {
+    public ArrayList<Bbs> searchList(int pageNumber, String searchType, String searchKeyword, String bbsCategory) {
         ArrayList<Bbs> list = new ArrayList<Bbs>();
         String SQL = "";
         PreparedStatement pstmt = null;
@@ -245,15 +250,16 @@ public class BbsDAO {
         
         try {
             if (searchType.equals("title")) {
-                SQL = "SELECT * FROM BBS WHERE bbsTitle LIKE ? AND bbsAvailable = 1 ORDER BY bbsID DESC LIMIT ?, 10";
+                SQL = "SELECT * FROM BBS WHERE bbsTitle LIKE ? AND bbsAvailable = 1 AND bbsCategory = ? ORDER BY bbsID DESC LIMIT ?, 10";
             } else if (searchType.equals("content")) {
-                SQL = "SELECT * FROM BBS WHERE bbsContent LIKE ? AND bbsAvailable = 1 ORDER BY bbsID DESC LIMIT ?, 10";
+                SQL = "SELECT * FROM BBS WHERE bbsContent LIKE ? AND bbsAvailable = 1 AND bbsCategory = ? ORDER BY bbsID DESC LIMIT ?, 10";
             } else if (searchType.equals("writer")) {
-                SQL = "SELECT * FROM BBS WHERE userID LIKE ? AND bbsAvailable = 1 ORDER BY bbsID DESC LIMIT ?, 10";
+                SQL = "SELECT * FROM BBS WHERE userID LIKE ? AND bbsAvailable = 1 AND bbsCategory = ? ORDER BY bbsID DESC LIMIT ?, 10";
             }
-            pstmt = conn.prepareStatement(SQL); //PreparedStatement pstmt = conn.prepareStatement(SQL);
+            pstmt = conn.prepareStatement(SQL);
             pstmt.setString(1, "%" + searchKeyword + "%");
-            pstmt.setInt(2, (pageNumber - 1) * 10);
+            pstmt.setString(2, bbsCategory);
+            pstmt.setInt(3, (pageNumber - 1) * 10);
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 Bbs bbs = new Bbs();
@@ -263,8 +269,9 @@ public class BbsDAO {
                 bbs.setBbsDate(rs.getString(4));
                 bbs.setBbsContent(rs.getString(5));
                 bbs.setBbsAvailable(rs.getInt(6));
-                bbs.setFileName(rs.getString(7)); // 파일 이름 설정
+                bbs.setFileName(rs.getString(7));
                 bbs.setViewCount(rs.getInt(8));
+                bbs.setBbsCategory(rs.getString(9)); // bbsCategory 설정
                 list.add(bbs);
             }
         } catch (SQLException e) { 
@@ -276,6 +283,76 @@ public class BbsDAO {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+        return list;
+    }
+
+    // 카테고리별 게시물 목록 가져오기
+    public ArrayList<Bbs> getListByCategory(String bbsCategory, int pageNumber) {
+        String SQL = "SELECT * FROM BBS WHERE bbsCategory = ? AND bbsAvailable = 1 ORDER BY bbsID DESC LIMIT ?, 10";
+        ArrayList<Bbs> list = new ArrayList<Bbs>();
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(SQL);
+            pstmt.setString(1, bbsCategory);
+            pstmt.setInt(2, (pageNumber - 1) * 10);
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Bbs bbs = new Bbs();
+                bbs.setBbsID(rs.getInt(1));
+                bbs.setBbsTitle(rs.getString(2));
+                bbs.setUserID(rs.getString(3));
+                bbs.setBbsDate(rs.getString(4));
+                bbs.setBbsContent(rs.getString(5));
+                bbs.setBbsAvailable(rs.getInt(6));
+                bbs.setViewCount(rs.getInt(8));
+                bbs.setBbsCategory(rs.getString(9));
+                list.add(bbs);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list; // 데이터베이스 오류
+    }
+
+    // 카테고리별 게시물 총 페이지 수 계산
+    public int getTotalPageCountByCategory(String bbsCategory) {
+        String SQL = "SELECT COUNT(*) FROM BBS WHERE bbsCategory = ? AND bbsAvailable = 1";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(SQL);
+            pstmt.setString(1, bbsCategory);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return (rs.getInt(1) + 9) / 10; // 총 페이지 수 계산
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1; // 데이터베이스 오류
+    }
+    
+    // 전체 게시판의 게시글을 가져오는 메서드
+    public ArrayList<Bbs> getAllList(int pageNumber) {
+        String SQL = "SELECT * FROM BBS WHERE bbsAvailable = 1 ORDER BY bbsID DESC LIMIT ?, 10";
+        ArrayList<Bbs> list = new ArrayList<Bbs>();
+        try {
+        	PreparedStatement pstmt = conn.prepareStatement(SQL);
+            pstmt = conn.prepareStatement(SQL);
+            pstmt.setInt(1, (pageNumber - 1) * 10);
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Bbs bbs = new Bbs();
+                bbs.setBbsID(rs.getInt(1));
+                bbs.setBbsTitle(rs.getString(2));
+                bbs.setUserID(rs.getString(3));
+                bbs.setBbsDate(rs.getString(4));
+                bbs.setBbsContent(rs.getString(5));
+                bbs.setBbsAvailable(rs.getInt(6));
+                bbs.setViewCount(rs.getInt(8));
+                bbs.setBbsCategory(rs.getString(9));
+                list.add(bbs);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return list;
     }

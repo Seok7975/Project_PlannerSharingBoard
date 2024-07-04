@@ -99,6 +99,19 @@
         userID = (String) session.getAttribute("userID");
     }
 %>
+    <div class="sidebar">
+        <a href="main.jsp" style="text-align: center;" >메인</a>
+        <div class="dropdown">
+            <a href="bbs.jsp?bbsCategory=all" style="text-align: center;" >게시판 <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="bbs.jsp?bbsCategory=all" style="text-align: center;">전체글보기</a></li>
+                <li><a href="bbs.jsp?bbsCategory=free" style="text-align: center;">자유게시판</a></li>
+                <li><a href="bbs.jsp?bbsCategory=study" style="text-align: center;">공부게시판</a></li>
+                <li><a href="bbs.jsp?bbsCategory=exercise" style="text-align: center;">운동게시판</a></li>
+            </ul>
+        </div>
+        <a href="planner/planner.jsp" style="text-align: center;">플래너</a>
+    </div>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -113,7 +126,15 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="main.jsp">메인</a></li>
-                    <li><a href="bbs.jsp">게시판</a></li>
+                    <li class="dropdown">
+	                    <a href="bbs.jsp?bbsCategory=all" role="button" aria-haspopup="true" aria-expanded="false">게시판 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="bbs.jsp?bbsCategory=all">전체글보기</a></li>
+                            <li><a href="bbs.jsp?bbsCategory=free">자유게시판</a></li>
+                            <li><a href="bbs.jsp?bbsCategory=study">공부게시판</a></li>
+                            <li><a href="bbs.jsp?bbsCategory=exercise">운동게시판</a></li>
+                        </ul>
+                    </li>
                     <li><a href="planner/planner.jsp">플래너</a></li> <!-- 플래너 메뉴 추가 -->
                 </ul>
                 <%
@@ -123,8 +144,8 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">접속하기 <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="joinAndLogin/login.jsp">로그인</a></li>
-                                <li><a href="joinAndLogin/join.jsp">회원가입</a></li>
+                                <li><a href="id/login.jsp">로그인</a></li>
+                                <li><a href="id/join.jsp">회원가입</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -135,8 +156,8 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">회원관리<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="profile.jsp">My Profile</a></li> <!-- My Profile 메뉴 추가 -->
-                                <li><a href="joinAndLogin/logoutAction.jsp">로그아웃</a></li>
+                                <li><a href="id/profile.jsp">My Profile</a></li> <!-- My Profile 메뉴 추가 -->
+                                <li><a href="id/logoutAction.jsp">로그아웃</a></li>
                             </ul>
                         </li>
                     </ul>
