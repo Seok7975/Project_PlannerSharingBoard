@@ -181,7 +181,7 @@ public class BbsDAO {
         return -1; // 데이터베이스 오류
     }
 	
-    // bbsAvailable =0로 하여 글을 삭제하는 함수
+    // bbsAvailable = 0로 하여 글을 삭제하는 함수
 	public int delete(int bbsID) {
 		String SQL = "UPDATE BBS SET bbsAvailable =0 WHERE bbsID = ?";
 		try {
@@ -217,21 +217,37 @@ public class BbsDAO {
         return totalPageCount;
     }
     
-    // 검색한 결과의 게시물 수를 반환하는 메서드
+    // 검색한 결과의 게시물 수를 반환하는 메서드 => 페이징할 때 사용
+	/*
+	 * public int getSearchPostCount(String searchType, String searchKeyword, String
+	 * bbsCategory) { String SQL = ""; if (searchType.equals("title")) { SQL =
+	 * "SELECT COUNT(*) FROM BBS WHERE bbsTitle LIKE ? AND bbsAvailable = 1 AND bbsCategory = ?"
+	 * ; } else if (searchType.equals("content")) { SQL =
+	 * "SELECT COUNT(*) FROM BBS WHERE bbsContent LIKE ? AND bbsAvailable = 1 AND bbsCategory = ?"
+	 * ; } else if (searchType.equals("writer")) { SQL =
+	 * "SELECT COUNT(*) FROM BBS WHERE userID LIKE ? AND bbsAvailable = 1 AND bbsCategory = ?"
+	 * ; } try { PreparedStatement pstmt = conn.prepareStatement(SQL);
+	 * pstmt.setString(1, "%" + searchKeyword + "%"); pstmt.setString(2,
+	 * bbsCategory); rs = pstmt.executeQuery(); if (rs.next()) { return
+	 * rs.getInt(1); } } catch (Exception e) { e.printStackTrace(); } return -1; //
+	 * 데이터베이스 오류 }
+	 */
     public int getSearchPostCount(String searchType, String searchKeyword, String bbsCategory) {
         String SQL = "";
-        if (searchType.equals("title")) {
-            SQL = "SELECT COUNT(*) FROM BBS WHERE bbsTitle LIKE ? AND bbsAvailable = 1 AND bbsCategory = ?";
-        } else if (searchType.equals("content")) {
-            SQL = "SELECT COUNT(*) FROM BBS WHERE bbsContent LIKE ? AND bbsAvailable = 1 AND bbsCategory = ?";
-        } else if (searchType.equals("writer")) {
-            SQL = "SELECT COUNT(*) FROM BBS WHERE userID LIKE ? AND bbsAvailable = 1 AND bbsCategory = ?";
+        if ("all".equals(bbsCategory)) {
+            SQL = "SELECT COUNT(*) FROM BBS WHERE " + searchType + " LIKE ? AND bbsAvailable = 1";
+        } else {
+            SQL = "SELECT COUNT(*) FROM BBS WHERE " + searchType + " LIKE ? AND bbsAvailable = 1 AND bbsCategory = ?";
         }
         try {
             PreparedStatement pstmt = conn.prepareStatement(SQL);
-            pstmt.setString(1, "%" + searchKeyword + "%");
-            pstmt.setString(2, bbsCategory);
-            rs = pstmt.executeQuery();
+            if ("all".equals(bbsCategory)) {
+                pstmt.setString(1, "%" + searchKeyword + "%");
+            } else {
+                pstmt.setString(1, "%" + searchKeyword + "%");
+                pstmt.setString(2, bbsCategory);
+            }
+            ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 return rs.getInt(1);
             }
@@ -240,26 +256,54 @@ public class BbsDAO {
         }
         return -1; // 데이터베이스 오류
     }
-    
-    
+
+    // 검색한 결과의 게시물을 반환하는 메서드
+	/*
+	 * public ArrayList<Bbs> searchList(int pageNumber, String searchType, String
+	 * searchKeyword, String bbsCategory) { ArrayList<Bbs> list = new
+	 * ArrayList<Bbs>(); String SQL = ""; PreparedStatement pstmt = null; ResultSet
+	 * rs = null;
+	 * 
+	 * try { if (searchType.equals("title")) { SQL =
+	 * "SELECT * FROM BBS WHERE bbsTitle LIKE ? AND bbsAvailable = 1 AND bbsCategory = ? ORDER BY bbsID DESC LIMIT ?, 10"
+	 * ; } else if (searchType.equals("content")) { SQL =
+	 * "SELECT * FROM BBS WHERE bbsContent LIKE ? AND bbsAvailable = 1 AND bbsCategory = ? ORDER BY bbsID DESC LIMIT ?, 10"
+	 * ; } else if (searchType.equals("writer")) { SQL =
+	 * "SELECT * FROM BBS WHERE userID LIKE ? AND bbsAvailable = 1 AND bbsCategory = ? ORDER BY bbsID DESC LIMIT ?, 10"
+	 * ; } pstmt = conn.prepareStatement(SQL); pstmt.setString(1, "%" +
+	 * searchKeyword + "%"); pstmt.setString(2, bbsCategory); pstmt.setInt(3,
+	 * (pageNumber - 1) * 10); rs = pstmt.executeQuery(); while (rs.next()) { Bbs
+	 * bbs = new Bbs(); bbs.setBbsID(rs.getInt(1));
+	 * bbs.setBbsTitle(rs.getString(2)); bbs.setUserID(rs.getString(3));
+	 * bbs.setBbsDate(rs.getString(4)); bbs.setBbsContent(rs.getString(5));
+	 * bbs.setBbsAvailable(rs.getInt(6)); bbs.setFileName(rs.getString(7));
+	 * bbs.setViewCount(rs.getInt(8)); bbs.setBbsCategory(rs.getString(9)); //
+	 * bbsCategory 설정 list.add(bbs); } } catch (SQLException e) {
+	 * e.printStackTrace(); } finally { try { if (rs != null) rs.close(); if (pstmt
+	 * != null) pstmt.close(); } catch (Exception e) { e.printStackTrace(); } }
+	 * return list; }
+	 */
+
     public ArrayList<Bbs> searchList(int pageNumber, String searchType, String searchKeyword, String bbsCategory) {
         ArrayList<Bbs> list = new ArrayList<Bbs>();
         String SQL = "";
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-        
+         
         try {
-            if (searchType.equals("title")) {
-                SQL = "SELECT * FROM BBS WHERE bbsTitle LIKE ? AND bbsAvailable = 1 AND bbsCategory = ? ORDER BY bbsID DESC LIMIT ?, 10";
-            } else if (searchType.equals("content")) {
-                SQL = "SELECT * FROM BBS WHERE bbsContent LIKE ? AND bbsAvailable = 1 AND bbsCategory = ? ORDER BY bbsID DESC LIMIT ?, 10";
-            } else if (searchType.equals("writer")) {
-                SQL = "SELECT * FROM BBS WHERE userID LIKE ? AND bbsAvailable = 1 AND bbsCategory = ? ORDER BY bbsID DESC LIMIT ?, 10";
+            if ("all".equals(bbsCategory)) {
+                SQL = "SELECT * FROM BBS WHERE " + searchType + " LIKE ? AND bbsAvailable = 1 ORDER BY bbsID DESC LIMIT ?, 10";
+                pstmt = conn.prepareStatement(SQL);
+                pstmt.setString(1, "%" + searchKeyword + "%");
+                pstmt.setInt(2, (pageNumber - 1) * 10);
+            } else {
+                SQL = "SELECT * FROM BBS WHERE " + searchType + " LIKE ? AND bbsAvailable = 1 AND bbsCategory = ? ORDER BY bbsID DESC LIMIT ?, 10";
+                pstmt = conn.prepareStatement(SQL);
+                pstmt.setString(1, "%" + searchKeyword + "%");
+                pstmt.setString(2, bbsCategory);
+                pstmt.setInt(3, (pageNumber - 1) * 10);
             }
-            pstmt = conn.prepareStatement(SQL);
-            pstmt.setString(1, "%" + searchKeyword + "%");
-            pstmt.setString(2, bbsCategory);
-            pstmt.setInt(3, (pageNumber - 1) * 10);
+            
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 Bbs bbs = new Bbs();
@@ -271,7 +315,7 @@ public class BbsDAO {
                 bbs.setBbsAvailable(rs.getInt(6));
                 bbs.setFileName(rs.getString(7));
                 bbs.setViewCount(rs.getInt(8));
-                bbs.setBbsCategory(rs.getString(9)); // bbsCategory 설정
+                bbs.setBbsCategory(rs.getString(9));
                 list.add(bbs);
             }
         } catch (SQLException e) { 
@@ -287,6 +331,7 @@ public class BbsDAO {
         return list;
     }
 
+    
     // 카테고리별 게시물 목록 가져오기
     public ArrayList<Bbs> getListByCategory(String bbsCategory, int pageNumber) {
         String SQL = "SELECT * FROM BBS WHERE bbsCategory = ? AND bbsAvailable = 1 ORDER BY bbsID DESC LIMIT ?, 10";

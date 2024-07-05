@@ -1,0 +1,134 @@
+@charset "UTF-8";
+/* body {
+     background-color: #e0f7fa;   생동감 있는 옅은 파란색 배경
+} */
+
+/* 네비게이션 바를 상단에 고정 */
+.navbar-fixed-top {
+    position: fixed;
+    top: 0;
+    width: 100%; 
+    z-index: 1000;
+}
+
+
+/* 왼쪽 사이드바 스타일 */
+.sidebar {
+    position: fixed;
+    top: 60px; /* 네비게이션 바 높이만큼 아래로 내림 */
+    left: 0;
+    width: 200px;
+    height: calc(100% - 60px); /* 네비게이션 바 높이만큼 줄임 */
+    background-color: #f8f8f8;
+    padding-top: 20px;
+    border-right: 1px solid #ddd;
+    transition: width 0.3s ease, opacity 0.3s ease; /* 사이드바 너비와 투명도 변화 애니메이션 */
+    /* overflow: hidden; */
+}
+
+.sidebar a {
+    display: block;
+    color: black;
+    padding: 16px;
+    text-decoration: none;
+}
+
+.sidebar a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.sidebar .dropdown-menu {
+    display: none;
+    position: static;
+    float: none;
+    background-color: #f8f8f8;
+    border: none;
+    box-shadow: none;
+}
+
+.sidebar .dropdown:hover .dropdown-menu {
+    display: block;
+    animation: slideDown 0.3s ease-in-out; /* 슬라이딩 애니메이션 추가 */
+}
+
+    /* 사이드바가 사라질 때의 스타일 */
+    .sidebar.hidden {
+        width: 0;
+        opacity: 0;
+        overflow: hidden;
+    }
+
+    /* 메인 콘텐츠가 확장될 때의 스타일 */
+    .main-content.expanded {
+        margin-left: 0;
+    }
+    
+@keyframes slideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+   
+/* 드롭다운 메뉴가 커서를 가져다 대기만 해도 열리도록 설정 */
+.navbar-nav > li.dropdown:hover > .dropdown-menu {
+    display: block;
+    animation: slideDown 0.3s ease-in-out; /* 슬라이딩 애니메이션 추가 */
+}
+
+.category-title {
+    font-size: 24px; /* 텍스트 크기 */
+    font-weight: bold; /* 텍스트 굵기 */
+    margin-bottom: 20px; /* 아래쪽 여백 */
+    /* text-align: center; */ /* 가운데 정렬 */
+    /* color: #333; */ /* 텍스트 색상 */
+}
+
+
+a, a:hover {
+    color : #000000;
+    text-decoration: none;
+}
+
+.table {		
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+.table th.number-col {
+    width: 8%;
+}
+.table th.title-col {
+    width: 45%;
+}
+.table th.writer-col {
+    width: 14%;
+}
+
+.table th.date-col {
+	width: 15%;
+}
+
+.table th.viewCount-col {
+	width: 8%;
+}
+
+.table th, .table td {
+	/* border: 1px solid #ddd; */
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.table td {
+    text-align: center;
+    /* border: 1px solid #dddddd; */
+       background-color: #fefefe;
+}

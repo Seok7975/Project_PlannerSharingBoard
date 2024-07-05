@@ -7,7 +7,7 @@
 .navbar-fixed-top {
     position: fixed;
     top: 0;
-    width: 100%;
+    width: 100%; 
     z-index: 1000;
 }
 
@@ -15,10 +15,10 @@
 /* 왼쪽 사이드바 스타일 */
 .sidebar {
     position: fixed;
-    top: 60px; /* 네비게이션 바 높이만큼 아래로 내림 */
+    top: 50px; /* 네비게이션 바 높이만큼 아래로 내림 */
     left: 0;
-    width: 200px;
-    height: calc(100% - 60px); /* 네비게이션 바 높이만큼 줄임 */
+    width: 155px;
+    height: calc(100% - 50px); /* 네비게이션 바 높이만큼 줄임 */
     background-color: #f8f8f8;
     padding-top: 20px;
     border-right: 1px solid #ddd;
@@ -26,6 +26,31 @@
     /* overflow: hidden; */
 }
 
+/* 작은 화면에서 사이드바 숨기기 */
+@media (max-width: 768px) {
+    .sidebar {
+        left: -250px;
+    }
+}
+
+/* 사이드바가 보일 때 클래스 */
+.sidebar.show {
+    left: 0;
+}
+
+        /* 메인 콘텐츠 스타일 */
+        .main-content {
+            margin-left: 250px; /* 기본 사이드바 너비만큼 마진 */
+            transition: margin-left 0.3s;
+        }
+
+        /* 작은 화면에서 메인 콘텐츠 마진 조정 */
+        @media (max-width: 768px) {
+            .main-content {
+                margin-left: 0;
+            }
+        }
+        
 .sidebar a {
     display: block;
     color: black;
@@ -78,6 +103,7 @@
    
 /* 드롭다운 메뉴가 커서를 가져다 대기만 해도 열리도록 설정 */
 .navbar-nav > li.dropdown:hover > .dropdown-menu {
+	text-align: center;
     display: block;
     animation: slideDown 0.3s ease-in-out; /* 슬라이딩 애니메이션 추가 */
 }

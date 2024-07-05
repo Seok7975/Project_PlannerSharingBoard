@@ -156,43 +156,11 @@
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 <link rel="stylesheet" href="css/bbsStyle.css"> <!-- 외부 CSS 파일 참조 -->
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="css/jumbotronCustom.css">
 <title>JSP 게시판 웹 사이트</title>
-<script>
-	document.addEventListener('DOMContentLoaded', function() {
-	    let sidebarHidden = false;
-	
-	    function adjustSidebar() {
-	        var windowWidth = window.innerWidth;
-	        var container = document.querySelector('.container');
-	        var containerWidth = container ? container.offsetWidth : 0;
-	        var sidebar = document.querySelector('.sidebar');
-	        var mainContent = document.querySelector('.main-content');
-	        
-	        // 메인 콘텐츠와 사이드바가 겹칠 때 사이드바를 숨김
-	        if (windowWidth <= containerWidth + 200 && !sidebarHidden) {
-	            sidebar.classList.add('hidden');
-	            mainContent.classList.add('expanded');
-	            sidebarHidden = true;
-	        } else if (windowWidth > containerWidth + 200 && sidebarHidden) {
-	            sidebar.classList.remove('hidden');
-	            mainContent.classList.remove('expanded');
-	            sidebarHidden = false;
-	        }
-	    }
-	
-	    adjustSidebar();
-	    
-	    window.addEventListener('resize', function() {
-	        adjustSidebar();
-	    });
-	});
-</script>
-
+<script src="js/bbsToggleSidebar.js"></script>
 </head>
 <body>
 <%
@@ -353,24 +321,32 @@
                         <% } %>
                     </tbody>
                 </table>
-                <div style="text-align: center;">
-                    <% 
-                        int pageBlock = 5;
-                        int startPage = ((pageNumber - 1) / pageBlock) * pageBlock + 1;
-                        int endPage = startPage + pageBlock - 1;
-
-                        if(pageNumber != 1) {
-                    %>
-                        <a href="bbs.jsp?pageNumber=<%= pageNumber - 1 %>&searchType=<%= searchType %>&searchKeyword=<%= (searchKeyword != null && !searchKeyword.equals("")) ? searchKeyword : "" %>&bbsCategory=<%= bbsCategory %>" class="btn btn-default pull-left">이전</a>
-                    <% } 
-                        for (int i = startPage; i <= endPage && i <= totalPage; i++) {
-                    %>
-                        <a href="bbs.jsp?pageNumber=<%= i %>&searchType=<%= searchType %>&searchKeyword=<%= (searchKeyword != null && !searchKeyword.equals("")) ? searchKeyword : "" %>&bbsCategory=<%= bbsCategory %>" class="btn <%= (i == pageNumber) ? "btn-primary pull-left" : "btn-default pull-left" %>"><%= i %></a>
-                    <% } 
-                        if(pageNumber != totalPage) {
-                    %>
-                        <a href="bbs.jsp?pageNumber=<%= pageNumber + 1 %>&searchType=<%= searchType %>&searchKeyword=<%= (searchKeyword != null && !searchKeyword.equals("")) ? searchKeyword : "" %>&bbsCategory=<%= bbsCategory %>" class="btn btn-default pull-left">다음</a>
-                    <% } %>
+				<% 
+				    int pageBlock = 5;
+				    int startPage = ((pageNumber - 1) / pageBlock) * pageBlock + 1;
+				    int endPage = startPage + pageBlock - 1;
+				
+				    // totalPage가 0일 때도 1페이지를 표시하도록 설정
+				    if (totalPage == 0) {
+				        totalPage = 1;
+				    }
+				%>
+				<div style="text-align: center;">
+				    <% if (totalPage >= 1) { %>
+				        <% if(pageNumber != 1) { %>
+				            <a href="bbs.jsp?pageNumber=<%= pageNumber - 1 %>&searchType=<%= searchType %>&searchKeyword=<%= (searchKeyword != null && !searchKeyword.equals("")) ? searchKeyword : "" %>&bbsCategory=<%= bbsCategory %>" class="btn btn-default pull-left">이전</a>
+				        <% } 
+				            for (int i = startPage; i <= endPage && i <= totalPage; i++) {
+				        %>
+				            <a href="bbs.jsp?pageNumber=<%= i %>&searchType=<%= searchType %>&searchKeyword=<%= (searchKeyword != null && !searchKeyword.equals("")) ? searchKeyword : "" %>&bbsCategory=<%= bbsCategory %>" class="btn <%= (i == pageNumber) ? "btn-primary pull-left" : "btn-default pull-left" %>"><%= i %></a>
+				        <% } 
+				            if(pageNumber != totalPage) {
+				        %>
+				            <a href="bbs.jsp?pageNumber=<%= pageNumber + 1 %>&searchType=<%= searchType %>&searchKeyword=<%= (searchKeyword != null && !searchKeyword.equals("")) ? searchKeyword : "" %>&bbsCategory=<%= bbsCategory %>" class="btn btn-default pull-left">다음</a>
+				        <% }
+				    } %>
+				</div>
+                <div style="text-align: center; margin-top: 20px;">
                     <a href="write.jsp?bbsCategory=<%= bbsCategory %>" class="btn btn-primary pull-right">글쓰기</a>
                 </div>
             </div>

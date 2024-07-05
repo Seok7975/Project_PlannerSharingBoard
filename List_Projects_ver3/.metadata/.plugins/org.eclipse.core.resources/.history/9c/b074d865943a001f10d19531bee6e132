@@ -1,0 +1,131 @@
+@charset "UTF-8";
+
+/* 네비게이션 바를 상단에 고정 */
+.navbar-fixed-top {
+    position: fixed;
+    top: 0;
+    width: 100%; 
+    z-index: 1000;
+}
+
+/* 왼쪽 사이드바 스타일 */
+.sidebar {
+    position: fixed;
+    top: 50px; /* 네비게이션 바 높이만큼 아래로 내림 */
+    left: 0;
+    width: 155px;
+    height: calc(100% - 50px); /* 네비게이션 바 높이만큼 줄임 */
+    background-color: #f8f8f8;
+    padding-top: 20px;
+    border-right: 1px solid #ddd;
+    transition: width 0.3s ease, opacity 0.3s ease; /* 사이드바 너비와 투명도 변화 애니메이션 */
+    /* overflow: hidden; */
+}
+
+/* 작은 화면에서 사이드바 숨기기 */
+@media (max-width: 768px) {
+    .sidebar {
+        left: -250px;
+    }
+}
+
+/* 사이드바가 보일 때 클래스 */
+.sidebar.show {
+    left: 0;
+}
+
+/* 메인 콘텐츠 스타일 */
+.main-content {
+    margin-left: 155px; /* 기본 사이드바 너비만큼 마진 */
+    transition: margin-left 0.3s;
+}
+
+/* 작은 화면에서 메인 콘텐츠 마진 조정 */
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+    }
+}
+
+.sidebar a {
+    display: block;
+    color: black;
+    padding: 16px;
+    text-decoration: none;
+}
+
+.sidebar a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.sidebar .dropdown-menu {
+    display: none;
+    position: static;
+    float: none;
+    background-color: #f8f8f8;
+    border: none;
+    box-shadow: none;
+}
+
+.sidebar .dropdown:hover .dropdown-menu {
+    display: block;
+    animation: slideDown 0.3s ease-in-out; /* 슬라이딩 애니메이션 추가 */
+}
+
+/* 사이드바가 사라질 때의 스타일 */
+.sidebar.hidden {
+    width: 0;
+    opacity: 0;
+    overflow: hidden;
+}
+
+/* 메인 콘텐츠가 확장될 때의 스타일 */
+.main-content.expanded {
+    margin-left: 0;
+}
+
+@keyframes slideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 드롭다운 메뉴가 커서를 가져다 대기만 해도 열리도록 설정 */
+.navbar-nav > li.dropdown:hover > .dropdown-menu {
+    display: block;
+    animation: slideDown 0.3s ease-in-out; /* 슬라이딩 애니메이션 추가 */
+}
+
+.category-title {
+    font-size: 24px; /* 텍스트 크기 */
+    font-weight: bold; /* 텍스트 굵기 */
+    margin-bottom: 20px; /* 아래쪽 여백 */
+    /* text-align: center; */ /* 가운데 정렬 */
+    /* color: #333; */ /* 텍스트 색상 */
+}
+
+a, a:hover {
+    color: #000000;
+    text-decoration: none;
+}
+
+.login-container {
+    max-width: 700px;
+    max-height: 1000px;
+    margin: 50px auto;
+}
+
+.jumbotron {
+    padding: 20px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}

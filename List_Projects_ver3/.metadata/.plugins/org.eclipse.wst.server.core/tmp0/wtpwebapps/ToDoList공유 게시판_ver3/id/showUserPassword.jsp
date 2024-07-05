@@ -9,7 +9,7 @@
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
-<link rel="stylesheet" href="css/bbsStyle.css"> <!-- 외부 CSS 파일 참조 -->
+<link rel="stylesheet" href="../css/idStyle.css"> <!-- 외부 CSS 파일 참조 -->
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->
@@ -18,6 +18,19 @@
 <title>비밀번호 찾기 결과</title>
 </head>
 <body>
+    <div class="sidebar">
+        <a href="../main.jsp" style="text-align: center;">메인</a>
+        <div class="dropdown">
+            <a href="../bbs.jsp?bbsCategory=all" style="text-align: center;">게시판 <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="../bbs.jsp?bbsCategory=all" style="text-align: center;">전체글보기</a></li>
+                <li><a href="../bbs.jsp?bbsCategory=free" style="text-align: center;">자유게시판</a></li>
+                <li><a href="../bbs.jsp?bbsCategory=study" style="text-align: center;">공부게시판</a></li>
+                <li><a href="../bbs.jsp?bbsCategory=exercise" style="text-align: center;">운동게시판</a></li>
+            </ul>
+        </div>
+        <a href="planner/planner.jsp" style="text-align: center;">플래너</a>
+    </div> 
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">

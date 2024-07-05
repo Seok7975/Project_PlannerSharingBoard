@@ -20,4 +20,5 @@ STRING=\#17c6a3 | null | null | true | null | null
 UNIVERSAL=\#a7ec21 | null | null | null | null | null
 URI=\#17c6a3 | null | null | true | null | null
 eclipse.preferences.version=1
+newFileTemplateName=New CSS File
 overriddenByCSS=,ATMARK_RULE,ATTRIBUTE_DELIM,ATTRIBUTE_NAME,ATTRIBUTE_OPERATOR,ATTRIBUTE_VALUE,CLASS,COLON,COMBINATOR,COMMENT,CURLY_BRACE,ID,MEDIA,NORMAL,PROPERTY_NAME,PROPERTY_VALUE,PSEUDO,SELECTOR,SEMI_COLON,STRING,UNIVERSAL,URI,

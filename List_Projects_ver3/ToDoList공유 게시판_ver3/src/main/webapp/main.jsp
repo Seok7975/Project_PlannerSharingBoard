@@ -91,32 +91,7 @@
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/jumbotronCustom.css">
-	<script>
-	    document.addEventListener('DOMContentLoaded', function() {
-	        function adjustSidebar() {
-	            var windowWidth = window.innerWidth;
-	            var container = document.querySelector('.container');
-	            var containerWidth = container ? container.offsetWidth : 0;
-	            var sidebar = document.querySelector('.sidebar');
-	            var mainContent = document.querySelector('.main-content');
-	            
-	            // 메인 콘텐츠와 사이드바가 겹칠 때 사이드바를 숨김
-	            if (windowWidth <= containerWidth + 200) {
-	                sidebar.classList.add('hidden');
-	                mainContent.classList.add('expanded');
-	            } else {
-	                sidebar.classList.remove('hidden');
-	                mainContent.classList.remove('expanded');
-	            }
-	        }
-	
-	        adjustSidebar();
-	        
-	        window.addEventListener('resize', function() {
-	            adjustSidebar();
-	        });
-	    });
-	</script>
+	<script src="js/mainToggleSidebar.js"></script>
 </head>
 <body>
 <%

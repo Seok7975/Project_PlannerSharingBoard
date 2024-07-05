@@ -1,0 +1,33 @@
+//이벤트리스너 버전
+
+	document.addEventListener("DOMContentLoaded", function() {
+	    function toggleSidebar() {
+	        if (window.innerWidth > 768) {
+	            document.querySelector('.sidebar').classList.add('show');
+	            document.querySelector('.main-content').style.marginLeft = '250px'; // 사이드바 너비만큼 마진 추가
+	        } else {
+	            document.querySelector('.sidebar').classList.remove('show');
+	            document.querySelector('.main-content').style.marginLeft = '0'; // 마진 제거
+	        }
+	    }
+
+    	// 초기 로드 시 사이드바 상태 설정
+	    toggleSidebar();
+
+	    // 창 크기가 변경될 때마다 사이드바 상태 업데이트
+	    window.addEventListener('resize', function() {
+	        toggleSidebar();
+    	});
+
+    // 사이드바 토글 버튼 (필요한 경우)
+	    document.querySelector('.navbar-toggle').addEventListener('click', function() {
+	        var sidebar = document.querySelector('.sidebar');
+	        sidebar.classList.toggle('show');
+	        if (sidebar.classList.contains('show')) {
+	            document.querySelector('.main-content').style.marginLeft = '250px';
+	        } else {
+	            document.querySelector('.main-content').style.marginLeft = '0';
+	        }
+	    });
+	});
+	

@@ -34,7 +34,7 @@
         PrintWriter script = response.getWriter();
         script.println("<script>");
         script.println("alert('로그인을 해주세요');");
-        script.println("location.href='joinAndLogin/login.jsp';");
+        script.println("location.href='id/login.jsp';");
         script.println("</script>");
         script.close();
         return;
